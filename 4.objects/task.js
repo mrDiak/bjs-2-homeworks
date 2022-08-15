@@ -18,11 +18,11 @@ Student.prototype.addMark = function(mark) {
   }
 }
 
-Student.prototype.addMarks = function(...Marks) {
+Student.prototype.addMarks = function(...marks) {
   if(this.marks === undefined){ 
-    this.marks = [...Marks];
+    this.marks = [...marks];
   } else {
-    this.marks.push(...Marks);
+    this.marks.push(marks);
   }
 }
 
@@ -38,9 +38,6 @@ Student.prototype.getAverage = function() {
 
 Student.prototype.exclude = function(reason) {
   this.excluded = reason;
-  
-  if(reason === 'low grades') {
-    delete this.subject;
-    delete this.marks;
-  }
+  delete this.subject;
+  delete this.marks;
 }
