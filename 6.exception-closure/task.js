@@ -1,9 +1,11 @@
 function parseCount(value){
-    if (Number.isNaN(Number.parseInt(value))){
+    const count = Number.parseInt(value);
+    
+    if (Number.isNaN(count)){
         throw new Error("Невалидное значение");
     }
 
-    return Number.parseInt(value)
+    return count;
 }
 
 function validateCount(value){
