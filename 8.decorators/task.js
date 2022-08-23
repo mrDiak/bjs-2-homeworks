@@ -10,39 +10,22 @@ function cachingDecoratorNew(func) {
     if (objectInCache) {
       console.log("Из кэша: " + objectInCache.result);
       return "Из кэша: " + objectInCache.result;
-    } else {
-      let result = func.call(this, ...args);
-      if (cache.length > 4) {
-        cache.shift();
-      }
-      cache.push({ hash, result });
-      console.log("Вычисляем: " + result);
-      return "Вычисляем: " + result;
+    };
+
+    let result = func.call(this, ...args);
+
+    if (cache.length > 4) {
+      cache.shift();
     }
+
+    cache.push({ hash, result });
+    console.log("Вычисляем: " + result);
+    return "Вычисляем: " + result;
+
   }
 
   return wrapper;
 }
-
-// function debounceDecoratorNew(func) {
-//   let timerId = null;
-//   let firstCall = true;
-
-//   function wrapper(...args) {
-//     if(!firstCall) {
-//       firstCall = false;
-//       func.apply(this, args);
-//     } else {
-//       clearTimeout(timerId);
-//       timerId = setTimeout(() => {
-//         firstCall = true;
-//         return func.apply(this, args);
-//     })
-//   }
-// }
-//   return wrapper;
-// }
-
 
 function debounceDecoratorNew(func, ms) {
   let timerID = null;
@@ -50,18 +33,18 @@ function debounceDecoratorNew(func, ms) {
   function wrapper (...args) {
     if (!timerID) {
       func.apply(this, args);
-      wrapper.count.push(args);
+      wrapper.count++;
     }
 
     clearTimeout(timerID);
     timerID = setTimeout(() => {
       func.apply(this, args);
-      wrapper.count.push(args);
+      wrapper.count++;
     }, ms)
     wrapper.allCount++
   }
   
   wrapper.allCount = 0;
-  wrapper.count = [];
+  wrapper.count = 0;
   return wrapper
 }
